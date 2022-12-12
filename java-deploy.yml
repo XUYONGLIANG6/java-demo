@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: java-test
+  name: java-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-test
+  template:
+    metadata:
+      labels:
+        app: java-test
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - name : test-port
+          protocol: TCP
+          containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
